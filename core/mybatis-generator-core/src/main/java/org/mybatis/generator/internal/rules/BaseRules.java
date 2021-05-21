@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.internal.rules;
 
+import com.base.internal.rules.BaseRulesExt;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -38,12 +39,18 @@ public abstract class BaseRules implements Rules {
 
     protected final boolean isModelOnly;
 
+    /**
+     * 加载自定义方法判断
+     */
+    public final BaseRulesExt baseRulesExt;
+
     protected BaseRules(IntrospectedTable introspectedTable) {
         super();
         this.introspectedTable = introspectedTable;
         this.tableConfiguration = introspectedTable.getTableConfiguration();
         String modelOnly = tableConfiguration.getProperty(PropertyRegistry.TABLE_MODEL_ONLY);
         isModelOnly = StringUtility.isTrue(modelOnly);
+        baseRulesExt = new BaseRulesExt(introspectedTable);
     }
 
     /**
@@ -429,4 +436,9 @@ public abstract class BaseRules implements Rules {
     public boolean generateJavaClient() {
         return !isModelOnly;
     }
+
+    public BaseRulesExt getBaseRulesExt() {
+        return baseRulesExt;
+    }
+
 }

@@ -20,7 +20,6 @@ public class MybatisGeneratorCoreRunning {
         List<String> warnings = new ArrayList<String>();
         try {
             boolean overwrite = true; //是否覆盖模式.
-//			System.out.println("生成目标文件位置:" +MybatisGeneratorUtil.class.getResource("/").getPath());
             File configFile = new File(MybatisGeneratorCoreRunning.class.getResource("/generatorConfig.xml").getFile());
             ConfigurationParser cp = new ConfigurationParser(warnings);
 

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.base.config.TableConfigurationParseTable.TableConfigurationMethodEnabled;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class TableConfiguration extends PropertyHolder {
@@ -81,6 +82,9 @@ public class TableConfiguration extends PropertyHolder {
     private String sqlProviderName;
 
     private final List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
+
+    /**记录自定义方式是否启用**/
+    private final TableConfigurationMethodEnabled tableConfigurationMethodEnabled = new TableConfigurationMethodEnabled();
 
     public TableConfiguration(Context context) {
         super();
@@ -466,5 +470,9 @@ public class TableConfiguration extends PropertyHolder {
 
     public String getDynamicSqlSupportClassName() {
         return getProperty(PropertyRegistry.TABLE_DYNAMIC_SQL_SUPPORT_CLASS_NAME);
+    }
+
+    public TableConfigurationMethodEnabled getTableConfigurationMethodEnabled() {
+        return tableConfigurationMethodEnabled;
     }
 }

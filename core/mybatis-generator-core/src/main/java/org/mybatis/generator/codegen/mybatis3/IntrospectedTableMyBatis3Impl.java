@@ -18,6 +18,7 @@ package org.mybatis.generator.codegen.mybatis3;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.base.codegen.mybatis3.javamapper.CustomJavaMapperGenerator;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -113,7 +114,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
         AbstractJavaClientGenerator javaGenerator;
         if ("XMLMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            javaGenerator = new JavaMapperGenerator(getClientProject());
+//            javaGenerator = new JavaMapperGenerator(getClientProject());
+            javaGenerator = new CustomJavaMapperGenerator(getClientProject());
         } else if ("MIXEDMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
             javaGenerator = new MixedClientGenerator(getClientProject());
         } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$

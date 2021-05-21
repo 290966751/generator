@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.base.config.TableConfigurationParseTable;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
@@ -62,6 +63,9 @@ public class MyBatisGeneratorConfigurationParser {
     private final Properties extraProperties;
     private final Properties configurationProperties;
 
+    /**判断table自定义方法是否加载***/
+    private final TableConfigurationParseTable tableConfigurationParseTable;
+
     public MyBatisGeneratorConfigurationParser(Properties extraProperties) {
         super();
         if (extraProperties == null) {
@@ -70,6 +74,7 @@ public class MyBatisGeneratorConfigurationParser {
             this.extraProperties = extraProperties;
         }
         configurationProperties = new Properties();
+        tableConfigurationParseTable = new TableConfigurationParseTable();
     }
 
     public Configuration parseConfiguration(Element rootNode)
@@ -350,6 +355,11 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(sqlProviderName)) {
             tc.setSqlProviderName(sqlProviderName);
         }
+
+        /**
+         * 判断table自定义方法是否加载
+         */
+        tableConfigurationParseTable.parseTable(context, node, tc, attributes);
 
         NodeList nodeList = node.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
