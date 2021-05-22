@@ -34,13 +34,6 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         super(project, requiresMatchedXMLGenerator);
     }
 
-    public static void main(String[] args) {
-        String type = "com.base.codegen.mybatis3.javamapper.CustomJavaMapperGenerator";
-        AbstractJavaClientGenerator javaGenerator = (AbstractJavaClientGenerator) ObjectFactory
-                .createInternalObject(type);
-        System.out.println(javaGenerator instanceof CustomJavaMapperGenerator);
-    }
-
     @Override
     public List<CompilationUnit> getCompilationUnits() {
 //        /*return*/ super.getCompilationUnits();

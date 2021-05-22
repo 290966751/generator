@@ -17,6 +17,9 @@ public class TableConfigurationParseTable implements Serializable {
 
     private static final long serialVersionUID = -47849488003887591L;
 
+    /**
+     * Table自定义方法是否启用记录实体
+     */
     public static class TableConfigurationMethodEnabled {
 
         public TableConfigurationMethodEnabled() {
@@ -24,6 +27,7 @@ public class TableConfigurationParseTable implements Serializable {
         }
 
         private boolean enableDeleteByPrimaryKeys;
+        private boolean enableUpdateByMap;
 
         public boolean isEnableDeleteByPrimaryKeys() {
             return enableDeleteByPrimaryKeys;
@@ -31,6 +35,14 @@ public class TableConfigurationParseTable implements Serializable {
 
         public void setEnableDeleteByPrimaryKeys(boolean enableDeleteByPrimaryKeys) {
             this.enableDeleteByPrimaryKeys = enableDeleteByPrimaryKeys;
+        }
+
+        public boolean isEnableUpdateByMap() {
+            return enableUpdateByMap;
+        }
+
+        public void setEnableUpdateByMap(boolean enableUpdateByMap) {
+            this.enableUpdateByMap = enableUpdateByMap;
         }
     }
 
@@ -43,9 +55,14 @@ public class TableConfigurationParseTable implements Serializable {
      */
     public void parseTable(Context context, Node node, TableConfiguration tc, Properties attributes) {
 
-        String enableInsert = attributes.getProperty("enableDeleteByPrimaryKeys"); //$NON-NLS-1$
-        if (stringHasValue(enableInsert)) {
-            tc.getTableConfigurationMethodEnabled().setEnableDeleteByPrimaryKeys(isTrue(enableInsert));
+        String enableDeleteByPrimaryKeys = attributes.getProperty("enableDeleteByPrimaryKeys"); //$NON-NLS-1$
+        if (stringHasValue(enableDeleteByPrimaryKeys)) {
+            tc.getTableConfigurationMethodEnabled().setEnableDeleteByPrimaryKeys(isTrue(enableDeleteByPrimaryKeys));
+        }
+
+        String enableUpdateByMap = attributes.getProperty("enableUpdateByMap"); //$NON-NLS-1$
+        if (stringHasValue(enableUpdateByMap)) {
+            tc.getTableConfigurationMethodEnabled().setEnableUpdateByMap(isTrue(enableUpdateByMap));
         }
     }
 }

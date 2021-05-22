@@ -31,4 +31,14 @@ public class BaseRulesExt {
                 && introspectedTable.getPrimaryKeyColumns().size() == 1;
     }
 
+    public boolean generateUpdateByMap() {
+        if (isModelOnly) {
+            return false;
+        }
+        return tableConfiguration.getTableConfigurationMethodEnabled().isEnableUpdateByMap()
+                && introspectedTable.getPrimaryKeyColumns().size() == 1
+                && (introspectedTable.hasBaseColumns() || introspectedTable
+                .hasBLOBColumns());
+    }
+
 }

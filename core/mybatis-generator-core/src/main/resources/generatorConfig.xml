@@ -69,7 +69,11 @@
 			   enableCountByExample="false"
 			   enableUpdateByExample="false"
 			   selectByExampleQueryId="false"
-			   enableDeleteByPrimaryKey="true" enableDeleteByPrimaryKeys="true"></table>
+			   enableDeleteByPrimaryKey="true"
+			   enableDeleteByPrimaryKeys="true"
+			   enableUpdateByMap="true"
+		>
+		</table>
 
 	</context>
 </generatorConfiguration>
