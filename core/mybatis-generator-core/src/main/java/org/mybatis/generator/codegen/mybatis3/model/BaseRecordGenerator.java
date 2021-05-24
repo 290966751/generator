@@ -37,6 +37,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.internal.rules.BaseRules;
 
 public class BaseRecordGenerator extends AbstractJavaGenerator {
 
@@ -67,10 +68,13 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
         List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
 
-        if (introspectedTable.isConstructorBased()) {
+        boolean hasBaseRecordBuilderClass = introspectedTable.getRules() instanceof BaseRules
+                && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateBaseRecordBuilderClass();
+
+        if (introspectedTable.isConstructorBased() || hasBaseRecordBuilderClass) {
             addParameterizedConstructor(topLevelClass, introspectedTable.getNonBLOBColumns());
 
-            if (includeBLOBColumns()) {
+            if (includeBLOBColumns() || hasBaseRecordBuilderClass) {
                 addParameterizedConstructor(topLevelClass, introspectedTable.getAllColumns());
             }
 

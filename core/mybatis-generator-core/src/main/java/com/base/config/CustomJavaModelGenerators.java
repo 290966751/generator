@@ -43,14 +43,14 @@ public class CustomJavaModelGenerators {
     }
 
     public void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback, List<AbstractJavaGenerator> javaGenerators) {
-        if (this.getRules().generateBaseRecordClass()
-                && !introspectedTable.isImmutable()
-                && this.getRules() instanceof BaseRules
-                && ((BaseRules) this.getRules()).getBaseRulesExt().generateBaseRecordBuilderClass()) {
-            AbstractJavaGenerator javaGenerator = new BaseRecordBuilderGenerator(this.getModelProject());
-            this.initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
-            javaGenerators.add(javaGenerator);
-        }
+//        if (this.getRules().generateBaseRecordClass()
+//                && !introspectedTable.isImmutable()
+//                && this.getRules() instanceof BaseRules
+//                && ((BaseRules) this.getRules()).getBaseRulesExt().generateBaseRecordBuilderClass()) {
+//            AbstractJavaGenerator javaGenerator = new BaseRecordBuilderGenerator(this.getModelProject());
+//            this.initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+//            javaGenerators.add(javaGenerator);
+//        }
 
     }
 }

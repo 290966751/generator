@@ -56,6 +56,9 @@ public class BaseRulesExt {
         if (isModelOnly) {
             return false;
         }
+        if (!introspectedTable.getRules().generateBaseRecordClass() || introspectedTable.isImmutable()) {
+            return false;
+        }
         String property = introspectedTable.getContext().getJavaModelGeneratorConfiguration().getProperty(CustomPropertyRegistry.MODEL_GENERATOR_EXAMPLE_PROJECT);
         return StringUtility.stringHasValue(property) && StringUtility.isTrue(property);
     }
