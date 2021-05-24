@@ -173,6 +173,7 @@
   delimitIdentifiers CDATA #IMPLIED
   delimitAllColumns CDATA #IMPLIED
   enableDeleteByPrimaryKeys CDATA #IMPLIED
+  enableDeleteByMap CDATA #IMPLIED
 >
 
 <!--

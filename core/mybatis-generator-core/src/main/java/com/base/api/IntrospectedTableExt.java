@@ -13,12 +13,14 @@ public class IntrospectedTableExt {
     protected enum InternalAttributeExt {
 
         ATTR_DELETE_BY_PRIMARY_KEYS_STATEMENT_ID,
+        ATTR_DELETE_BY_MAP_STATEMENT_ID,
 
         ;
     }
 
     public void calculateXmlAttributes() {
         this.setDeleteByPrimaryKeysStatementId("deleteByPrimaryKeys"); //$NON-NLS-1$
+        this.setDeleteByMapStatementId("deleteByMap"); //$NON-NLS-1$
     }
 
 
@@ -32,6 +34,14 @@ public class IntrospectedTableExt {
 
     public String getDeleteByPrimaryKeysStatementId() {
         return internalAttributes.get(IntrospectedTableExt.InternalAttributeExt.ATTR_DELETE_BY_PRIMARY_KEYS_STATEMENT_ID);
+    }
+
+    public void setDeleteByMapStatementId(String s) {
+        internalAttributes.put(IntrospectedTableExt.InternalAttributeExt.ATTR_DELETE_BY_MAP_STATEMENT_ID, s);
+    }
+
+    public String getDeleteByMapStatementId() {
+        return internalAttributes.get(IntrospectedTableExt.InternalAttributeExt.ATTR_DELETE_BY_MAP_STATEMENT_ID);
     }
 
 }

@@ -21,9 +21,11 @@ public class TableConfigurationParseTable implements Serializable {
 
         public TableConfigurationMethodEnabled() {
             this.enableDeleteByPrimaryKeys = false;
+            this.enableDeleteByMap = false;
         }
 
         private boolean enableDeleteByPrimaryKeys;
+        private boolean enableDeleteByMap;
 
         public boolean isEnableDeleteByPrimaryKeys() {
             return enableDeleteByPrimaryKeys;
@@ -31,6 +33,14 @@ public class TableConfigurationParseTable implements Serializable {
 
         public void setEnableDeleteByPrimaryKeys(boolean enableDeleteByPrimaryKeys) {
             this.enableDeleteByPrimaryKeys = enableDeleteByPrimaryKeys;
+        }
+
+        public boolean isEnableDeleteByMap() {
+            return enableDeleteByMap;
+        }
+
+        public void setEnableDeleteByMap(boolean enableDeleteByMap) {
+            this.enableDeleteByMap = enableDeleteByMap;
         }
     }
 
@@ -43,9 +53,14 @@ public class TableConfigurationParseTable implements Serializable {
      */
     public void parseTable(Context context, Node node, TableConfiguration tc, Properties attributes) {
 
-        String enableInsert = attributes.getProperty("enableDeleteByPrimaryKeys"); //$NON-NLS-1$
-        if (stringHasValue(enableInsert)) {
-            tc.getTableConfigurationMethodEnabled().setEnableDeleteByPrimaryKeys(isTrue(enableInsert));
+        String enableDeleteByPrimaryKeys = attributes.getProperty("enableDeleteByPrimaryKeys"); //$NON-NLS-1$
+        if (stringHasValue(enableDeleteByPrimaryKeys)) {
+            tc.getTableConfigurationMethodEnabled().setEnableDeleteByPrimaryKeys(isTrue(enableDeleteByPrimaryKeys));
+        }
+
+        String enableDeleteByMap = attributes.getProperty("enableDeleteByMap"); //$NON-NLS-1$
+        if (stringHasValue(enableDeleteByMap)) {
+            tc.getTableConfigurationMethodEnabled().setEnableDeleteByMap(isTrue(enableDeleteByMap));
         }
     }
 }

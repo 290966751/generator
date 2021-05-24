@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * DeleteByPrimaryKeys 接口实现
+ */
 public class DeleteByPrimaryKeysMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     @Override

@@ -1,5 +1,6 @@
 package com.base.codegen.mybatis3.javamapper;
 
+import com.base.codegen.mybatis3.javamapper.elements.DeleteByMapMethodGenerator;
 import com.base.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeysMethodGenerator;
 import com.base.codegen.mybatis3.xmlmapper.CustomXMLMapperGenerator;
 import org.mybatis.generator.api.CommentGenerator;
@@ -34,11 +35,9 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         super(project, requiresMatchedXMLGenerator);
     }
 
-    public static void main(String[] args) {
-        String type = "com.base.codegen.mybatis3.javamapper.CustomJavaMapperGenerator";
-        AbstractJavaClientGenerator javaGenerator = (AbstractJavaClientGenerator) ObjectFactory
-                .createInternalObject(type);
-        System.out.println(javaGenerator instanceof CustomJavaMapperGenerator);
+    @Override
+    public AbstractXmlGenerator getMatchedXMLGenerator() {
+        return new CustomXMLMapperGenerator();
     }
 
     @Override
@@ -86,7 +85,8 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         /**
          * 加载自定义方法
          */
-        addDeleteByPrimaryKeysMethod(interfaze);
+        this.addDeleteByPrimaryKeysMethod(interfaze);
+        this.addDeleteByMapMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
@@ -109,8 +109,11 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         }
     }
 
-    @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return new CustomXMLMapperGenerator();
+    private void addDeleteByMapMethod(Interface interfaze) {
+        if (introspectedTable.getRules() instanceof BaseRules
+                && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateDeleteByMap()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByMapMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
     }
 }

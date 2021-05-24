@@ -7,6 +7,9 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
+/**
+ * DeleteByPrimaryKeys xml实现
+ */
 public class DeleteByPrimaryKeysElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
