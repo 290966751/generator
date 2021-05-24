@@ -14,9 +14,9 @@ public class DeleteByPrimaryKeysElementGenerator extends AbstractXmlElementGener
         XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute("id", introspectedTable.getIntrospectedTableExt().getDeleteByPrimaryKeysStatementId())); //$NON-NLS-1$
-        String parameterClass = "java.util.List"; //$NON-NLS-1$
+//        String parameterClass = "java.util.List"; //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterClass));
+                "java.util.List"));
 
         context.getCommentGenerator().addComment(answer);
 
