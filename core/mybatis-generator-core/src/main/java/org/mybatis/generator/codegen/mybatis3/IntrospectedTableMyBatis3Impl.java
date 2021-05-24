@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.base.codegen.mybatis3.javamapper.CustomJavaMapperGenerator;
+import com.base.config.CustomJavaModelGenerators;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -57,8 +58,14 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     protected AbstractXmlGenerator xmlMapperGenerator;
 
+    /**
+     * 自定义model实现
+     */
+    private CustomJavaModelGenerators customJavaModelGenerators;
+
     public IntrospectedTableMyBatis3Impl() {
         super(TargetRuntime.MYBATIS3);
+        customJavaModelGenerators = new CustomJavaModelGenerators(this);
     }
 
     @Override
@@ -159,6 +166,10 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                     progressCallback);
             javaGenerators.add(javaGenerator);
         }
+        /**
+         * 自定义model实现部分
+         */
+        customJavaModelGenerators.calculateJavaModelGenerators(warnings, progressCallback, javaGenerators);
     }
 
     protected void initializeAbstractGenerator(
