@@ -1,5 +1,6 @@
 package com.base.codegen.mybatis3.javamapper;
 
+import com.base.codegen.mybatis3.javamapper.elements.DeleteByMapMethodGenerator;
 import com.base.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeysMethodGenerator;
 import com.base.codegen.mybatis3.xmlmapper.CustomXMLMapperGenerator;
 import org.mybatis.generator.api.CommentGenerator;
@@ -32,6 +33,11 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
 
     public CustomJavaMapperGenerator(String project, boolean requiresMatchedXMLGenerator) {
         super(project, requiresMatchedXMLGenerator);
+    }
+
+    @Override
+    public AbstractXmlGenerator getMatchedXMLGenerator() {
+        return new CustomXMLMapperGenerator();
     }
 
     @Override
@@ -79,7 +85,8 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         /**
          * 加载自定义方法
          */
-        addDeleteByPrimaryKeysMethod(interfaze);
+        this.addDeleteByPrimaryKeysMethod(interfaze);
+        this.addDeleteByMapMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
@@ -102,8 +109,11 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         }
     }
 
-    @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return new CustomXMLMapperGenerator();
+    private void addDeleteByMapMethod(Interface interfaze) {
+        if (introspectedTable.getRules() instanceof BaseRules
+                && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateDeleteByMap()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByMapMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
     }
 }

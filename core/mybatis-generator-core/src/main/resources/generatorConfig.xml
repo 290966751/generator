@@ -48,6 +48,7 @@
 			targetProject="C:\Users\Desktop\tmp">
 			<property name="enableSubPackages" value="true"/>
 			<property name="trimStrings" value="true"/>
+			<property name="baseRecordBuilder" value="true"/>
 		</javaModelGenerator>
 
 		<!-- 生成映射文件的包名和位置-->
@@ -71,7 +72,7 @@
 			   selectByExampleQueryId="false"
 			   enableDeleteByPrimaryKey="true"
 			   enableDeleteByPrimaryKeys="true"
-			   enableUpdateByMap="true"
+			   enableDeleteByMap="true"
 		>
 		</table>
 

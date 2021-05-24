@@ -1,6 +1,5 @@
 package com.base.codegen.mybatis3.javamapper.elements;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -8,19 +7,18 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * DeleteByPrimaryKeys 接口实现
+ * DeleteByMap 接口实现
  */
-public class DeleteByPrimaryKeysMethodGenerator extends AbstractJavaMapperMethodGenerator {
+public class DeleteByMapMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-        Method method = new Method(introspectedTable.getIntrospectedTableExt().getDeleteByPrimaryKeysStatementId());
+        Method method = new Method(introspectedTable.getIntrospectedTableExt().getDeleteByMapStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -29,18 +27,12 @@ public class DeleteByPrimaryKeysMethodGenerator extends AbstractJavaMapperMethod
         // if more than one PK field, then we need to annotate the
         // parameters
         // for MyBatis
-        List<IntrospectedColumn> introspectedColumns = introspectedTable
-                .getPrimaryKeyColumns();
-        StringBuilder sb = new StringBuilder();
-        for (IntrospectedColumn introspectedColumn : introspectedColumns) {
-            FullyQualifiedJavaType type = FullyQualifiedJavaType.getNewListInstance();
-            type.addTypeArgument(introspectedColumn.getFullyQualifiedJavaType());
-            importedTypes.add(type);
-            importedTypes.add(introspectedColumn.getFullyQualifiedJavaType());
-
-            Parameter parameter = new Parameter(type, introspectedColumn.getJavaProperty());
-            method.addParameter(parameter);
-        }
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType("java.util.Map");
+        type.addTypeArgument(FullyQualifiedJavaType.getStringInstance());
+        type.addTypeArgument(FullyQualifiedJavaType.getObjectInstance());
+        importedTypes.add(type);
+        Parameter parameter = new Parameter(type, "params");
+        method.addParameter(parameter);
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
@@ -54,4 +46,5 @@ public class DeleteByPrimaryKeysMethodGenerator extends AbstractJavaMapperMethod
             interfaze.addMethod(method);
         }
     }
+
 }

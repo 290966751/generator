@@ -8,7 +8,7 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
 /**
- * 
+ * DeleteByPrimaryKeys xml实现
  */
 public class DeleteByPrimaryKeysElementGenerator extends AbstractXmlElementGenerator {
 
@@ -16,10 +16,10 @@ public class DeleteByPrimaryKeysElementGenerator extends AbstractXmlElementGener
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute("id", introspectedTable.getDeleteByPrimaryKeysStatementId())); //$NON-NLS-1$
-        String parameterClass = "java.util.List"; //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getIntrospectedTableExt().getDeleteByPrimaryKeysStatementId())); //$NON-NLS-1$
+//        String parameterClass = "java.util.List"; //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterClass));
+                "java.util.List"));
 
         context.getCommentGenerator().addComment(answer);
 
@@ -46,8 +46,8 @@ public class DeleteByPrimaryKeysElementGenerator extends AbstractXmlElementGener
             innerForEach.addAttribute(new Attribute("collection", "list")); //$NON-NLS-1$ //$NON-NLS-2$
             innerForEach.addAttribute(new Attribute("item", javaProperty)); //$NON-NLS-1$ //$NON-NLS-2$
             innerForEach.addAttribute(new Attribute("open", "(")); //$NON-NLS-1$ //$NON-NLS-2$
-            innerForEach.addAttribute(new Attribute("close", ")")); //$NON-NLS-1$ //$NON-NLS-2$
             innerForEach.addAttribute(new Attribute("separator", ",")); //$NON-NLS-1$ //$NON-NLS-2$
+            innerForEach.addAttribute(new Attribute("close", ")")); //$NON-NLS-1$ //$NON-NLS-2$
             innerForEach.addElement(new TextElement(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn)));
             answer.addElement(new TextElement(sb.toString()));

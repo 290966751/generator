@@ -1,5 +1,6 @@
 package com.base.internal.rules;
 
+import com.base.config.CustomPropertyRegistry;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
@@ -31,14 +32,32 @@ public class BaseRulesExt {
                 && introspectedTable.getPrimaryKeyColumns().size() == 1;
     }
 
-    public boolean generateUpdateByMap() {
+    public boolean generateDeleteByMap() {
         if (isModelOnly) {
             return false;
         }
-        return tableConfiguration.getTableConfigurationMethodEnabled().isEnableUpdateByMap()
+        return tableConfiguration.getTableConfigurationMethodEnabled().isEnableDeleteByMap()
                 && introspectedTable.getPrimaryKeyColumns().size() == 1
-                && (introspectedTable.hasBaseColumns() || introspectedTable
-                .hasBLOBColumns());
+                && (introspectedTable.hasBLOBColumns() || introspectedTable
+                .hasBaseColumns());
+    }
+
+    /**
+     * 是否初始化实体Builder类
+     * @return
+     */
+    public boolean generateBaseRecordBuilderClass() {
+        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
+                && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+            // this is a model only context - don't generate the builder class
+            return false;
+        }
+
+        if (isModelOnly) {
+            return false;
+        }
+        String property = introspectedTable.getContext().getJavaModelGeneratorConfiguration().getProperty(CustomPropertyRegistry.MODEL_GENERATOR_EXAMPLE_PROJECT);
+        return StringUtility.stringHasValue(property) && StringUtility.isTrue(property);
     }
 
 }

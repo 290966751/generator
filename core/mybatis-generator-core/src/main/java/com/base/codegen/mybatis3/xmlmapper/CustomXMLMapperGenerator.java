@@ -1,5 +1,6 @@
 package com.base.codegen.mybatis3.xmlmapper;
 
+import com.base.codegen.mybatis3.xmlmapper.elements.DeleteByMapElementGenerator;
 import com.base.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeysElementGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -57,6 +58,7 @@ public class CustomXMLMapperGenerator extends XMLMapperGenerator {
          * 自定义方法
          */
         this.addDeleteByPrimaryKeysElement(answer);
+        this.addDeleteByMapElement(answer);
 
         return answer;
     }
@@ -65,6 +67,14 @@ public class CustomXMLMapperGenerator extends XMLMapperGenerator {
         if (introspectedTable.getRules() instanceof BaseRules
                 && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateDeleteByPrimaryKey()) {
             AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeysElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    protected void addDeleteByMapElement(XmlElement parentElement) {
+        if (introspectedTable.getRules() instanceof BaseRules
+                && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateDeleteByMap()) {
+            AbstractXmlElementGenerator elementGenerator = new DeleteByMapElementGenerator();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

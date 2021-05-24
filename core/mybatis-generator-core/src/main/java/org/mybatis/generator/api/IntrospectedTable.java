@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api;
 
+import com.base.api.IntrospectedTableExt;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
@@ -96,7 +97,6 @@ public abstract class IntrospectedTable {
         ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
         ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE,
         ATTR_KOTLIN_RECORD_TYPE,
-        ATTR_DELETE_BY_PRIMARY_KEYS_STATEMENT_ID,
         ;
     }
 
@@ -135,6 +135,11 @@ public abstract class IntrospectedTable {
      * Table type retrieved from database metadata.
      */
     protected String tableType;
+
+    /**
+     * table扩展实现，自定义方法配置
+     */
+    protected IntrospectedTableExt introspectedTableExt = new IntrospectedTableExt();
 
     protected IntrospectedTable(TargetRuntime targetRuntime) {
         this.targetRuntime = targetRuntime;
@@ -431,7 +436,10 @@ public abstract class IntrospectedTable {
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$
-        this.setDeleteByPrimaryKeysStatementId("deleteByPrimaryKeys"); //$NON-NLS-1$
+        /**
+         * 自定义方法处理
+         */
+        this.getIntrospectedTableExt().calculateXmlAttributes();
     }
 
     public void setBlobColumnListId(String s) {
@@ -1086,11 +1094,7 @@ public abstract class IntrospectedTable {
         this.tableType = tableType;
     }
 
-    public void setDeleteByPrimaryKeysStatementId(String s) {
-        internalAttributes.put(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEYS_STATEMENT_ID, s);
-    }
-
-    public String getDeleteByPrimaryKeysStatementId() {
-        return internalAttributes.get(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEYS_STATEMENT_ID);
+    public IntrospectedTableExt getIntrospectedTableExt() {
+        return introspectedTableExt;
     }
 }

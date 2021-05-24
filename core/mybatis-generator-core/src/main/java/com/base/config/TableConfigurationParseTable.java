@@ -17,17 +17,15 @@ public class TableConfigurationParseTable implements Serializable {
 
     private static final long serialVersionUID = -47849488003887591L;
 
-    /**
-     * Table自定义方法是否启用记录实体
-     */
     public static class TableConfigurationMethodEnabled {
 
         public TableConfigurationMethodEnabled() {
             this.enableDeleteByPrimaryKeys = false;
+            this.enableDeleteByMap = false;
         }
 
         private boolean enableDeleteByPrimaryKeys;
-        private boolean enableUpdateByMap;
+        private boolean enableDeleteByMap;
 
         public boolean isEnableDeleteByPrimaryKeys() {
             return enableDeleteByPrimaryKeys;
@@ -37,12 +35,12 @@ public class TableConfigurationParseTable implements Serializable {
             this.enableDeleteByPrimaryKeys = enableDeleteByPrimaryKeys;
         }
 
-        public boolean isEnableUpdateByMap() {
-            return enableUpdateByMap;
+        public boolean isEnableDeleteByMap() {
+            return enableDeleteByMap;
         }
 
-        public void setEnableUpdateByMap(boolean enableUpdateByMap) {
-            this.enableUpdateByMap = enableUpdateByMap;
+        public void setEnableDeleteByMap(boolean enableDeleteByMap) {
+            this.enableDeleteByMap = enableDeleteByMap;
         }
     }
 
@@ -60,9 +58,9 @@ public class TableConfigurationParseTable implements Serializable {
             tc.getTableConfigurationMethodEnabled().setEnableDeleteByPrimaryKeys(isTrue(enableDeleteByPrimaryKeys));
         }
 
-        String enableUpdateByMap = attributes.getProperty("enableUpdateByMap"); //$NON-NLS-1$
-        if (stringHasValue(enableUpdateByMap)) {
-            tc.getTableConfigurationMethodEnabled().setEnableUpdateByMap(isTrue(enableUpdateByMap));
+        String enableDeleteByMap = attributes.getProperty("enableDeleteByMap"); //$NON-NLS-1$
+        if (stringHasValue(enableDeleteByMap)) {
+            tc.getTableConfigurationMethodEnabled().setEnableDeleteByMap(isTrue(enableDeleteByMap));
         }
     }
 }
