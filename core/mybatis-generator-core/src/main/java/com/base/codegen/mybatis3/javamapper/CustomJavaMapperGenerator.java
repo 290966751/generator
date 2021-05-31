@@ -1,6 +1,6 @@
 package com.base.codegen.mybatis3.javamapper;
 
-import com.base.codegen.mybatis3.javamapper.elements.DeleteByMapMethodGenerator;
+import com.base.codegen.mybatis3.javamapper.elements.UpdateByMapMethodGenerator;
 import com.base.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeysMethodGenerator;
 import com.base.codegen.mybatis3.xmlmapper.CustomXMLMapperGenerator;
 import org.mybatis.generator.api.CommentGenerator;
@@ -8,12 +8,10 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.rules.BaseRules;
 
 import java.util.ArrayList;
@@ -86,7 +84,7 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
          * 加载自定义方法
          */
         this.addDeleteByPrimaryKeysMethod(interfaze);
-        this.addDeleteByMapMethod(interfaze);
+        this.addUpdateByMapMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
@@ -109,10 +107,10 @@ public class CustomJavaMapperGenerator extends JavaMapperGenerator {
         }
     }
 
-    private void addDeleteByMapMethod(Interface interfaze) {
+    private void addUpdateByMapMethod(Interface interfaze) {
         if (introspectedTable.getRules() instanceof BaseRules
-                && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateDeleteByMap()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByMapMethodGenerator();
+                && ((BaseRules) introspectedTable.getRules()).getBaseRulesExt().generateUpdateByMap()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByMapMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

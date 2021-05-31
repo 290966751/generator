@@ -9,9 +9,9 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
 /**
- * DeleteByMap xml实现
+ * updateByMap xml实现
  */
-public class DeleteByMapElementGenerator extends AbstractXmlElementGenerator {
+public class UpdateByMapElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
     public void addElements(XmlElement parentElement) {

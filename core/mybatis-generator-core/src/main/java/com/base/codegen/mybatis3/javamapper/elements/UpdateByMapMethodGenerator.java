@@ -11,9 +11,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * DeleteByMap 接口实现
+ * updateByMap 接口实现
  */
-public class DeleteByMapMethodGenerator extends AbstractJavaMapperMethodGenerator {
+public class UpdateByMapMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     @Override
     public void addInterfaceElements(Interface interfaze) {

@@ -21,11 +21,11 @@ public class TableConfigurationParseTable implements Serializable {
 
         public TableConfigurationMethodEnabled() {
             this.enableDeleteByPrimaryKeys = false;
-            this.enableDeleteByMap = false;
+            this.enableUpdateByMap = false;
         }
 
         private boolean enableDeleteByPrimaryKeys;
-        private boolean enableDeleteByMap;
+        private boolean enableUpdateByMap;
 
         public boolean isEnableDeleteByPrimaryKeys() {
             return enableDeleteByPrimaryKeys;
@@ -35,12 +35,12 @@ public class TableConfigurationParseTable implements Serializable {
             this.enableDeleteByPrimaryKeys = enableDeleteByPrimaryKeys;
         }
 
-        public boolean isEnableDeleteByMap() {
-            return enableDeleteByMap;
+        public boolean isEnableUpdateByMap() {
+            return enableUpdateByMap;
         }
 
-        public void setEnableDeleteByMap(boolean enableDeleteByMap) {
-            this.enableDeleteByMap = enableDeleteByMap;
+        public void setEnableUpdateByMap(boolean enableUpdateByMap) {
+            this.enableUpdateByMap = enableUpdateByMap;
         }
     }
 
@@ -58,9 +58,9 @@ public class TableConfigurationParseTable implements Serializable {
             tc.getTableConfigurationMethodEnabled().setEnableDeleteByPrimaryKeys(isTrue(enableDeleteByPrimaryKeys));
         }
 
-        String enableDeleteByMap = attributes.getProperty("enableDeleteByMap"); //$NON-NLS-1$
-        if (stringHasValue(enableDeleteByMap)) {
-            tc.getTableConfigurationMethodEnabled().setEnableDeleteByMap(isTrue(enableDeleteByMap));
+        String enableUpdateByMap = attributes.getProperty("enableUpdateByMap"); //$NON-NLS-1$
+        if (stringHasValue(enableUpdateByMap)) {
+            tc.getTableConfigurationMethodEnabled().setEnableUpdateByMap(isTrue(enableUpdateByMap));
         }
     }
 }

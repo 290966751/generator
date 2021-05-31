@@ -32,11 +32,11 @@ public class BaseRulesExt {
                 && introspectedTable.getPrimaryKeyColumns().size() == 1;
     }
 
-    public boolean generateDeleteByMap() {
+    public boolean generateUpdateByMap() {
         if (isModelOnly) {
             return false;
         }
-        return tableConfiguration.getTableConfigurationMethodEnabled().isEnableDeleteByMap()
+        return tableConfiguration.getTableConfigurationMethodEnabled().isEnableUpdateByMap()
                 && introspectedTable.getPrimaryKeyColumns().size() == 1
                 && (introspectedTable.hasBLOBColumns() || introspectedTable
                 .hasBaseColumns());
