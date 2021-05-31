@@ -18,7 +18,7 @@ public class UpdateByMapMethodGenerator extends AbstractJavaMapperMethodGenerato
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-        Method method = new Method(introspectedTable.getIntrospectedTableExt().getDeleteByMapStatementId());
+        Method method = new Method(introspectedTable.getIntrospectedTableExt().getUpdateByMapStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());

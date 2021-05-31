@@ -72,7 +72,7 @@
 			   selectByExampleQueryId="false"
 			   enableDeleteByPrimaryKey="true"
 			   enableDeleteByPrimaryKeys="true"
-			   enableDeleteByMap="true"
+			   enableUpdateByMap="true"
 		>
 		</table>
 

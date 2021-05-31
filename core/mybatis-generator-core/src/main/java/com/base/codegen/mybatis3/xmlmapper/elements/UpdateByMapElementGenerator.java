@@ -17,7 +17,7 @@ public class UpdateByMapElementGenerator extends AbstractXmlElementGenerator {
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
         answer.addAttribute(new Attribute(
-                "id", introspectedTable.getIntrospectedTableExt().getDeleteByMapStatementId())); //$NON-NLS-1$
+                "id", introspectedTable.getIntrospectedTableExt().getUpdateByMapStatementId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", "java.util.Map")); //$NON-NLS-1$
         context.getCommentGenerator().addComment(answer);
 
