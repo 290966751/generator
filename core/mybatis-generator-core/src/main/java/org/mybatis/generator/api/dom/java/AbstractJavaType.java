@@ -95,4 +95,23 @@ public abstract class AbstractJavaType extends JavaElement {
     public Set<FullyQualifiedJavaType> getSuperInterfaceTypes() {
         return superInterfaceTypes;
     }
+
+    public void addMethod(int index, Method method) {
+        if (!methods.isEmpty() && methods.size() >= index) {
+            methods.add(index, method);
+        } else {
+            this.addMethod(method);
+        }
+    }
+
+    public void addMethod(int index, List<Method> methods) {
+        if (methods == null || methods.size() <= 0) {
+            return;
+        }
+        if (!this.methods.isEmpty() && this.methods.size() >= index) {
+            this.methods.addAll(index, methods);
+        } else {
+            this.methods.addAll(methods);
+        }
+    }
 }

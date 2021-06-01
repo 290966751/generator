@@ -123,7 +123,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         return answer;
     }
 
-    private FullyQualifiedJavaType getSuperClass() {
+    protected FullyQualifiedJavaType getSuperClass() {
         FullyQualifiedJavaType superClass;
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
             superClass = new FullyQualifiedJavaType(introspectedTable
@@ -145,12 +145,12 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 && introspectedTable.hasPrimaryKeyColumns();
     }
 
-    private boolean includeBLOBColumns() {
+    protected boolean includeBLOBColumns() {
         return !introspectedTable.getRules().generateRecordWithBLOBsClass()
                 && introspectedTable.hasBLOBColumns();
     }
 
-    private void addParameterizedConstructor(TopLevelClass topLevelClass, List<IntrospectedColumn> constructorColumns) {
+    protected void addParameterizedConstructor(TopLevelClass topLevelClass, List<IntrospectedColumn> constructorColumns) {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
@@ -195,7 +195,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         topLevelClass.addMethod(method);
     }
 
-    private List<IntrospectedColumn> getColumnsInThisClass() {
+    protected List<IntrospectedColumn> getColumnsInThisClass() {
         List<IntrospectedColumn> introspectedColumns;
         if (includePrimaryKeyColumns()) {
             if (includeBLOBColumns()) {

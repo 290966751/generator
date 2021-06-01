@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import java.util.Locale;
 import java.util.Properties;
 
+import com.base.config.PropertyRegistryExt;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -351,4 +352,32 @@ public class JavaBeansUtil {
         }
         return isTrimStringsEnabled(column.getIntrospectedTable());
     }
+
+    public static boolean isModelBuilderEnabled(Context context) {
+        return isTrue(context.getJavaModelGeneratorConfiguration().getProperty(PropertyRegistryExt.MODEL_GENERATOR_BUILDER));
+    }
+
+    public static boolean isModelBuilderEnabled(IntrospectedTable table) {
+        String modelBuilder = table.getTableConfiguration().getProperties().getProperty(PropertyRegistryExt.MODEL_GENERATOR_BUILDER);
+        if (modelBuilder != null) {
+            return isTrue(modelBuilder);
+        }
+        return isModelBuilderEnabled(table.getContext());
+    }
+
+    public static Field getJavaBeansFieldBuilder(IntrospectedColumn introspectedColumn) {
+        return getBasicJavaBeansField(introspectedColumn);
+    }
+
+    public static Method getJavaBeansSetterBuilder(IntrospectedColumn introspectedColumn,
+                                            Context context,
+                                            IntrospectedTable introspectedTable,
+                                                   FullyQualifiedJavaType innerClassJavaType) {
+        Method method = getBasicJavaBeansSetter(introspectedColumn);
+        method.setReturnType(innerClassJavaType);
+        method.addBodyLine("return this;");
+        addGeneratedSetterJavaDoc(method, introspectedColumn, context, introspectedTable);
+        return method;
+    }
+
 }
