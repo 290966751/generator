@@ -1,4 +1,4 @@
-MyBatis Generator 构造器(MBG)
+MyBatis Generator 代码生成器(MBG)
 =======================
 
 [![Build Status](https://github.com/mybatis/generator/workflows/Java%20CI/badge.svg?branch=master)](https://github.com/mybatis/generator/actions?query=workflow%3A%22Java+CI%22)
