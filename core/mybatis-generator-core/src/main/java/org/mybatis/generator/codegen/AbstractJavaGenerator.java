@@ -99,4 +99,22 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
                 topLevelClass.getImportedTypes());
     }
+
+    /**
+     * 判断构造方法是否加载
+     * @param topLevelClass
+     * @return
+     */
+    protected boolean hasAddDefaultConstructor(TopLevelClass topLevelClass) {
+        List<Method> methods = topLevelClass.getMethods();
+        if (!methods.isEmpty()) {
+            for (Method topLevelClassMethod : methods) {
+                if (topLevelClass.getType().getShortName().equals(topLevelClassMethod.getName()) && topLevelClassMethod.getParameters().isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

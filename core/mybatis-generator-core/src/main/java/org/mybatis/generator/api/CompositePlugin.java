@@ -1258,4 +1258,8 @@ public abstract class CompositePlugin implements Plugin {
 
         return true;
     }
+
+    public List<Plugin> getPlugins() {
+        return plugins;
+    }
 }

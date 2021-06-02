@@ -76,6 +76,10 @@ public abstract class AbstractJavaType extends JavaElement {
         fields.add(field);
     }
 
+    public void addField(int index, Field field) {
+        fields.add(index, field);
+    }
+
     public List<Method> getMethods() {
         return methods;
     }
@@ -97,21 +101,10 @@ public abstract class AbstractJavaType extends JavaElement {
     }
 
     public void addMethod(int index, Method method) {
-        if (!methods.isEmpty() && methods.size() >= index) {
-            methods.add(index, method);
-        } else {
-            this.addMethod(method);
-        }
+        methods.add(index, method);
     }
 
-    public void addMethod(int index, List<Method> methods) {
-        if (methods == null || methods.size() <= 0) {
-            return;
-        }
-        if (!this.methods.isEmpty() && this.methods.size() >= index) {
-            this.methods.addAll(index, methods);
-        } else {
-            this.methods.addAll(methods);
-        }
+    public void addMethod(int index, List<Method> addMethods) {
+        this.methods.addAll(index, addMethods);
     }
 }

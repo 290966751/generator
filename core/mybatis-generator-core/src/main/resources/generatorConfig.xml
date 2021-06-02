@@ -64,7 +64,7 @@
 		</javaClientGenerator>
 
 		<!-- 要生成哪些表-->
-		<table schema="text" tableName="text"
+		<table schema="db_test" tableName="text"
 			   enableSelectByExample="false"
 			   enableDeleteByExample="false"
 			   enableCountByExample="false"

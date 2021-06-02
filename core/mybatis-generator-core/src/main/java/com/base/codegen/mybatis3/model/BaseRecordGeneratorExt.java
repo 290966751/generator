@@ -14,7 +14,9 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.codegen.mybatis3.model.BaseRecordGenerator;
+import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.rules.BaseRules;
+import org.mybatis.generator.plugins.SerializablePlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +147,6 @@ public class BaseRecordGeneratorExt extends BaseRecordGenerator {
         builderClass.setStatic(true);
         builderClass.addJavaDocLine("/**");
         builderClass.addJavaDocLine(" * 建造者（Builder）模式.");
-        builderClass.addJavaDocLine(" * 此类由工具自动生成,重新生成后该类将被覆盖,请勿手动修改!");
         builderClass.addJavaDocLine(" */");
         Plugin plugins = context.getPlugins();
 
@@ -195,7 +196,20 @@ public class BaseRecordGeneratorExt extends BaseRecordGenerator {
         method.addBodyLine(sb.toString());
         builderClass.addMethod(method);
 
-        context.getPlugins().modelBaseRecordClassGenerated(builderClass, introspectedTable);
+//        context.getPlugins().modelBaseRecordClassGenerated(builderClass, introspectedTable);
+
+
+        if (plugins instanceof PluginAggregator) {
+            List<Plugin> pluginsList = ((PluginAggregator) plugins).getPlugins();
+            for (Plugin plugin : pluginsList) {
+                if (plugin instanceof SerializablePlugin) {
+                    continue;
+                }
+                if (!plugin.modelBaseRecordClassGenerated(builderClass, introspectedTable)) {
+                    break;
+                }
+            }
+        }
 
         return builderClass;
     }
@@ -205,26 +219,14 @@ public class BaseRecordGeneratorExt extends BaseRecordGenerator {
      * @param topLevelClass
      */
     private void addBuilderConstructor(TopLevelClass topLevelClass) {
-//        if (!isModelBuilderEnabled(introspectedTable)) {
-//            return;
-//        }
-//        int index = 1;
         List<Method> customMethods = new ArrayList<>(3);
         /**
          * 建造者（Builder）模式默认为主类增加无参构造
          */
-        boolean hasAddDefaultConstructor = false;
-        List<Method> methods = topLevelClass.getMethods();
-        if (!methods.isEmpty()) {
-            for (Method topLevelClassMethod : methods) {
-                if (topLevelClass.getType().getShortName().equals(topLevelClassMethod.getName()) && topLevelClassMethod.getParameters().isEmpty()) {
-                    hasAddDefaultConstructor = true;
-                    break;
-                }
-            }
-        }
-        if (!hasAddDefaultConstructor) {
-            this.addDefaultConstructor(topLevelClass);
+        int index = 1;
+        if (!this.hasAddDefaultConstructor(topLevelClass)) {
+            customMethods.add(this.getDefaultConstructor(topLevelClass));
+            index = 0;
         }
 
         /**
@@ -257,7 +259,7 @@ public class BaseRecordGeneratorExt extends BaseRecordGenerator {
         method = new Method("builder");
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setStatic(true);
-        method.setName("builder");
+//        method.setName("builder");
         method.setReturnType(modelBuilderJavaType);
         sb.setLength(0);
         sb.append("return new ");
@@ -267,7 +269,7 @@ public class BaseRecordGeneratorExt extends BaseRecordGenerator {
 //        topLevelClass.addMethod(index++, method);
         customMethods.add(method);
         /**添加在方法最上面**/
-        topLevelClass.addMethod(1, customMethods);
+        topLevelClass.addMethod(index, customMethods);
     }
 
     /**
@@ -276,10 +278,6 @@ public class BaseRecordGeneratorExt extends BaseRecordGenerator {
      */
     public FullyQualifiedJavaType getModelBuilderInstance() {
         return new FullyQualifiedJavaType(new StringBuilder(introspectedTable.getBaseRecordType()).append("Builder").toString()); //$NON-NLS-1$
-    }
-
-    protected void addDefaultConstructor(TopLevelClass topLevelClass) {
-        topLevelClass.addMethod(0, getDefaultConstructor(topLevelClass));
     }
 
 }

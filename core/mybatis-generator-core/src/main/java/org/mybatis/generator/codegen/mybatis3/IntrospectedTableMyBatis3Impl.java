@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.base.codegen.mybatis3.javamapper.CustomJavaMapperGenerator;
+import com.base.codegen.mybatis3.model.BaseRecordGeneratorExt;
 import com.base.config.CustomJavaModelGenerators;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
@@ -154,7 +155,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
 
         if (getRules().generateBaseRecordClass()) {
-            AbstractJavaGenerator javaGenerator = new BaseRecordGenerator(getModelProject());
+//            AbstractJavaGenerator javaGenerator = new BaseRecordGenerator(getModelProject());
+            AbstractJavaGenerator javaGenerator = new BaseRecordGeneratorExt(getModelProject());
             initializeAbstractGenerator(javaGenerator, warnings,
                     progressCallback);
             javaGenerators.add(javaGenerator);
